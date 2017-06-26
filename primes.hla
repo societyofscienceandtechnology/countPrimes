@@ -57,9 +57,6 @@
    // a place for numbers[range], so when checking for the next
    // prime we won't need to also check the index range.
 
-   
-
-
    try
       add(2, eax);
       malloc(eax);
