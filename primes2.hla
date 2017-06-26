@@ -1,0 +1,155 @@
+  
+  // primes2.hla -- High Level Assembly
+  // compile command: hla -lmelf_i386 primes2
+
+  // Program takes a user input and finds the number of primes less than that
+  // number using the Sieve of Eratosthenes approach, but ignoring the even numbers.
+
+   program countPrimes;
+   #include( "stdlib.hhf" )
+     
+   static
+
+      // The upper limit.  Numbers less than range will be tested.
+      range          : uns32;
+
+      // A pointers to an array of numbers.
+      
+      // For this program numbers[0] will represent 3,
+      //                  numbers[1] will represent 5,
+      //                  numbers[2] will represent 7,
+      //                          and so on.
+      // The values pointed to will be 0 if the number
+      // is known composite.  1 if it is possibly prime.
+      numbers        : pointer to uns8 := null;
+
+      // lastNumber = numbers[(range-3)/2]
+      lastNumber     : pointer to uns8 := null;
+      // halfWay = numbers[(range-3)/4]
+      halfWay        : pointer to uns8 := null;
+      // index variables
+      i              : uns32 := 0;
+      ii             : uns32 := 0;
+      // number of primes found
+      numberOfPrimes : uns32 := 0;
+
+   begin countPrimes;
+
+   // Have the user input the range.
+
+   stdout.put("Input range:");
+   try
+      stdin.getu32();
+   exception( ex.ConversionError)
+      stdout.put("Invalid input.", nl);
+      exit countPrimes;
+   endtry;
+   mov( eax, range );
+
+   // If the number is below 3, just print the answer and exit.
+   if(eax = 0) then
+      stdout.put( nl, "Less than 0 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+   if(eax = 1) then
+      stdout.put( nl, "Less than 1 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+   if(eax = 2) then
+      stdout.put( nl, "Less than 2 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+
+   // Allocate memory and setup associate variables.  
+   // For this program numbers[0] will represent 3,
+   //                  numbers[1] will represent 5,
+   //                  numbers[2] will represent 7,
+
+   try
+      sub(3, eax);
+      shr(1, eax);
+      inc(eax);
+      inc(eax);
+      malloc(eax);
+      mov( eax, numbers);
+      mov(range, eax);
+      sub(3, eax);
+      shr(1, eax);
+      add( eax, lastNumber);
+      mov( numbers, eax);
+      add( eax, lastNumber);
+      mov(range, eax);
+      sub(3, eax);
+      shr(2, eax);
+      add( eax, halfWay);
+      add( numbers, eax);
+      add( eax, halfWay);
+   exception( ex.MemoryAllocationFailure);
+      stdout.put("Insufficient Memory", nl);
+      exit countPrimes;
+   endtry;
+
+   // Set number array values to 1,
+   // which indicates a possible prime.
+   mov(numbers, eax);
+   repeat
+      mov ( 1, (type uns8 [eax]) );
+      inc(eax);
+   until ( eax > lastNumber );
+   // And numbers[lastNumber] = 1
+   mov(1, (type uns8 [eax]) );
+
+   // Account for 2 as a prime.
+   inc(numberOfPrimes);
+
+   // Start with 3, find the primes.
+   // i - address location of the prime being tested
+   // ii - index of the prime being tested
+   // The prime under test = (ii + 3) * 2
+
+   mov(numbers, i);
+   repeat
+      add(1, numberOfPrimes);
+
+
+      // Set the multiples to zero in the array numbers.
+      mov (i, eax);
+      if( eax <= halfWay) then
+         while( eax <= lastNumber ) do
+            mov ( 0, (type uns8 [eax]) );
+ 
+            add( 3, eax );
+            add( ii, eax );
+            // when the numbers get large, the addition can 
+            // overflow.  If this happens, obviously
+            // we're done.
+            if( @c ) then break;
+            endif;
+
+            add( ii, eax );
+            // And again check for overflow.
+            if( @c ) then break;
+            endif;
+
+         endwhile;
+      endif;
+
+      // Find the next prime.
+      repeat
+         add(1, i);
+         inc(ii);
+         mov( i, eax);
+      until ( (type uns8 [eax]) = 1 );
+      
+      mov( i, eax);
+   until ( eax > lastNumber );
+
+   // Be good programmer pony
+   // and put the memory back
+   // where we found it.
+   free(numbers);
+
+   stdout.put( nl, "Less than ", range, " there are ",
+         numberOfPrimes, " prime numbers.", nl);
+
+end countPrimes;
