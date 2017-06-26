@@ -41,7 +41,10 @@
    try
       stdin.getu32();
    exception( ex.ConversionError)
-      stdout.put("Invalid input; the program only accepts a positve integer below 4,294,967,295.", nl);
+      stdout.put("Invalid input; the program only accepts a positve integer not more than 4,294,967,295.", nl);
+      exit countPrimes;
+   exception( ex.ValueOutOfRange )
+      stdout.put("Invalid input; the program only accepts a positve integer not more than 4,294,967,295.", nl);
       exit countPrimes;
    endtry;
    mov( eax, range );
