@@ -41,7 +41,7 @@
    try
       stdin.getu32();
    exception( ex.ConversionError)
-      stdout.put("Invalid input.", nl);
+      stdout.put("Invalid input; the program only accepts a positve integer below 4,294,967,295.", nl);
       exit countPrimes;
    endtry;
    mov( eax, range );
@@ -60,7 +60,7 @@
       exit countPrimes;
    endif;
 
-   // Allocate memory and setup associate variables.  
+   // Allocate memory and setup associated variables.  
    // For this program numbers[0] will represent 3,
    //                  numbers[1] will represent 5,
    //                  numbers[2] will represent 7,
