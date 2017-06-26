@@ -51,8 +51,7 @@
       exit countPrimes;
    endif;
 
-
-   // Allocate memory and setup associate variables.  
+   // Allocate memory and setup associated variables.  
    // We're going to actually allocate
    // a place for numbers[range], so when checking for the next
    // prime we won't need to also check the index range.
