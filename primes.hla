@@ -1,6 +1,7 @@
   
   // primes.hla -- High Level Assembly
   // compile command: hla -lmelf_i386 primes
+  // by Hannah Leitheiser
 
   // Program takes a user input and finds the number of primes less than that
   // number using the Sieve of Eratosthenes approach.
@@ -29,13 +30,35 @@
    begin countPrimes;
 
    stdout.put("Input range:");
-   stdin.getu32();
+   try
+      stdin.getu32();
+   exception( ex.ConversionError)
+      stdout.put("Invalid input.", nl);
+      exit countPrimes;
+   endtry;
    mov( eax, range );
+
+   if(eax = 0) then
+      stdout.put( nl, "Less than 0 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+   if(eax = 1) then
+      stdout.put( nl, "Less than 1 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+   if(eax = 2) then
+      stdout.put( nl, "Less than 2 there are 0 prime numbers.", nl);
+      exit countPrimes;
+   endif;
+
 
    // Allocate memory and setup associate variables.  
    // We're going to actually allocate
    // a place for numbers[range], so when checking for the next
    // prime we won't need to also check the index range.
+
+   
+
 
    try
       add(2, eax);
