@@ -82,7 +82,7 @@
    // And numbers[range] = 1
    mov(1, (type uns8 [eax]) );
 
-   // Star with 2, find the primes.
+   // Start with 2, find the primes.
    mov(numbers, i);
    add(2, i);
    repeat

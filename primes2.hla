@@ -1,6 +1,10 @@
   
-  // primes2.hla -- High Level Assembly
+  // primes2.hla -- High Level Assembly source file
+  // by Hannah Leitheiser (leitheiserhannah@runbox.com)
+
   // compile command: hla -lmelf_i386 primes2
+  // Using: HLA (High Level Assembler - HLABE back end, LD linker)
+  // Version 2.16 build 4409 (prototype)
 
   // Program takes a user input and finds the number of primes less than that
   // number using the Sieve of Eratosthenes approach, but ignoring the even numbers.
@@ -108,7 +112,7 @@
    // Start with 3, find the primes.
    // i - address location of the prime being tested
    // ii - index of the prime being tested
-   // The prime under test = (ii + 3) * 2
+   // The prime under test = (ii * 2) + 3
 
    mov(numbers, i);
    repeat
