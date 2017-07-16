@@ -1,7 +1,12 @@
 /* Finds a somewhat large prime using the Sieve of sieve of Eratosthenes. 
      c source file
      by Hannah Leitheiser
-     compile command: gcc large_prime.c */
+     compile command: gcc large_prime.c 
+     
+     I'm sorta assuming a 64-bit processor, but I expect it would work, 
+     although slower, on 32-bit systems as well.
+     
+     */
 
 #include <stdlib.h>
 #include <stdio.h>
